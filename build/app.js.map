@@ -1,0 +1,1 @@
+{"version":3,"sources":["es6/app.js"],"names":[],"mappings":";;;;;;;;AAMA,MAAM,CAAC,UAAA,OAAO;WAAI;eAAM,kBAAkB;KAAA;CAAA,CAAC,CAAC","file":"es6/app.js","sourcesContent":["//define(function (require) {\n    //return function () {\n        //return \"<h1>The new CREAT0R!</h1>\";\n    //};\n//});\n\ndefine(require => () => \"<h1>creator</h1>\");\n"]}

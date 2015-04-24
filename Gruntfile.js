@@ -1,14 +1,36 @@
 module.exports = function (grunt) {
     // Project configuration.
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
-        uglify: {
+        browserify: {
+            dist: {
+                files: {
+                    'es5/mosaik.js': 'import/mock.js'
+                },
+                options: {
+                    transform: ['babelify']
+                }
+            }
+        },
+
+        babel: {
             options: {
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+                sourceMap: true
             },
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: 'es6',
+                    src: ['**/*.js'],
+                    dest: 'es5',
+                    ext: '.js'
+                }]
+            }
+        },
+
+        uglify: {
             build: {
-                src: 'src/<%= pkg.name %>.js',
-                dest: 'build/<%= pkg.name %>.js'
+                src: 'es5/mosaik.js',
+                dest: 'build/mosaik.min.js'
             }
         },
 
@@ -32,7 +54,12 @@ module.exports = function (grunt) {
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-babel');
+    grunt.loadNpmTasks('grunt-browserify');
 
     // Default task(s).
-    grunt.registerTask('default', ['requirejs']);
+    grunt.registerTask('default', [
+        'babel',
+        'uglify'
+    ]);
 };
